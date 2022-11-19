@@ -72,3 +72,20 @@ class RouterTestRoute extends StatelessWidget {
     );
   }
 }
+
+
+// 2_4 路由传递参数
+class EchoRoute extends StatelessWidget {
+  const EchoRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var tem = ModalRoute.of(context)?.settings.arguments;
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {  },
+        child: Text("echoRoute:$tem"),
+      ),
+    );
+  }
+}

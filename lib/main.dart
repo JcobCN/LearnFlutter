@@ -1,3 +1,4 @@
+import 'package:counter/2_2.dart';
 import 'package:counter/2_4.dart';
 import 'package:counter/countWidget.dart';
 import 'package:counter/2_3.dart';
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      // 2_4命名路由 '/'作为应用的home(首页)
+      initialRoute: "/",
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,6 +31,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(builder: (context) {
+          String? routeName = settings.name;  
+          print("routeName:$routeName");
+          return HomeTest();
+        }
+        );
+      },
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       // home: const CounterWidget() 
       // home: const GetStateObjectRoute()
@@ -44,7 +55,14 @@ class MyApp extends StatelessWidget {
       // home: HomeTest()
 
       // 2_4路由传值
-      home: RouterTestRoute()
+      // home: RouterTestRoute(),
+
+      // 2_4命名路由
+      routes: {
+        "new_page":(context) => NewRoute(),
+        "/":(context) => HomeTest(), //注册路由首页
+        "echo":(context) => EchoRoute()
+      },
     );
   }
 }
@@ -67,12 +85,19 @@ class HomeTest extends StatelessWidget {
             TextButton(
               child: Text("open new route"),
               onPressed: (() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: ((context) {
-                    return NewRoute();    
-                  }))
-                ) ;   
+                // 2_4 路由测试
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: ((context) {
+                //     return NewRoute();    
+                //   }))
+                // ) ;   
+
+                // 2_4 命名路由
+                // Navigator.pushNamed(context, 'new_page');
+
+                // 2_4 命名路由传参
+                Navigator.of(context).pushNamed("echo", arguments: "hi");
               }),
             )
           ],
